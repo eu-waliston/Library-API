@@ -1,0 +1,53 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+  db:
+    image: postgres:14-alpine
+    environment:
+      POSTGRES_USER: library_user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: library_api_development
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  app:
+    build: .
+    depends_on:
+      - db
+      - redis
+    environment:
+      DATABASE_HOST: db
+      REDIS_URL: redis://redis:6379/1
+      RAILS_ENV: development
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+
+  sidekiq:
+    build: .
+    depends_on:
+      - redis
+      - db
+    environment:
+      DATABASE_HOST: db
+      REDIS_URL: redis://redis:6379/1
+      RAILS_ENV: development
+    command: bundle exec sidekiq -C config/sidekiq.yml
+    volumes:
+      - .:/app
+
+volumes:
+  postgres_data:
+  redis_data:
