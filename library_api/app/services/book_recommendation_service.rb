@@ -1,18 +1,17 @@
-# frozen_string_literal: true
-
+# app/services/book_recommendation_service.rb
 class BookRecommendationService
-  def initilizer(user)
+  def initialize(user)
     @user = user
   end
 
   def call
-    # Implmenetação simples - pode ser expandida com algiritmos ML
+    # Implementação simples - pode ser expandida com algoritmos ML
     recommendations = []
 
-    # Baseadp no genero dos livros emprestados
+    # Baseado no gênero dos livros emprestados
     recommendations += genre_based_recommendations
 
-    # Baseado nas availações
+    # Baseado nas avaliações
     recommendations += rating_based_recommendations
 
     # Recomendações populares
@@ -25,11 +24,14 @@ class BookRecommendationService
 
   def genre_based_recommendations
     user_genres = @user.loans.joins(:book).group('books.genre').count
-    top_genre = user_genres.max_by {|_, count| count}&.first
+    top_genre = user_genres.max_by { |_, count| count }&.first
 
     return [] unless top_genre
 
-    Book.by_genre(top_genre).where.not(id: @user.loans.select(:book_id)).order('RANDOM()').limit(5)
+    Book.by_genre(top_genre)
+        .where.not(id: @user.loans.select(:book_id))
+        .order('RANDOM()')
+        .limit(5)
   end
 
   def rating_based_recommendations
@@ -37,8 +39,9 @@ class BookRecommendationService
         .where('reviews.rating >= ?', 4)
         .where.not(id: @user.loans.select(:book_id))
         .group('books.id')
-        .having('COUNT(revews.id) >= 5')
-        .order('AVG(revews.rating) DESC')
+        .having('COUNT(reviews.id) >= 5')
+        .order('AVG(reviews.rating) DESC')
+        .limit(5)
   end
 
   def popular_recommendations

@@ -1,5 +1,4 @@
-# frozen_string_literal: true
-
+# app/jobs/overdue_check_job.rb
 class OverdueCheckJob < ApplicationJob
   queue_as :default
 
@@ -10,7 +9,7 @@ class OverdueCheckJob < ApplicationJob
     # Calcula multas
     calculate_overdue_fines
 
-    # Atualzia estatisticas
+    # Atualiza estatísticas
     update_book_statistics
   end
 
@@ -23,7 +22,7 @@ class OverdueCheckJob < ApplicationJob
       fine_amount = loan.calculate_fine
       if fine_amount > 0
         loan.create_fine!(
-          amout: fine_amount,
+          amount: fine_amount,
           status: 'pending',
           due_date: 30.days.from_now
         )
