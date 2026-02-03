@@ -52,6 +52,7 @@ gem 'bundler-audit', require: false
 gem 'prometheus-client', '~> 4.0'
 
 group :development do
+  gem 'rubocop', require: false
   gem 'spring', '~> 4.1'
   gem 'spring-watcher-listen', '~> 2.1'
   gem 'rubocop', require: false
