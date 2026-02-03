@@ -9,7 +9,7 @@ bundle install
 
 # Instalar dependências Node.js (se necessário)
 echo "Instalando dependências Node.js..."
-yarn install || npm isntall 
+yarn install || npm isntall
 
 # Configurar banco de dados
 echo "Configurando banco de dados..."

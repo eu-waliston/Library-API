@@ -1,0 +1,27 @@
+require:
+  - rubocop-rails
+  - rubocop-rspec
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.1.2
+  Exclude:
+    - 'db/**/*'
+    - 'bin/*'
+    - 'vendor/**/*'
+    - 'node_modules/**/*'
+    - 'tmp/**/*'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+    - 'config/routes.rb'
+
+Style/Documentation:
+  Enabled: false
+
+Layout/LineLength:
+  Max: 100
+
+Rails:
+  Enabled: true
