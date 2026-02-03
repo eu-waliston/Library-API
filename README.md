@@ -190,44 +190,59 @@ Rails:
 
 33 Como Executar o Projeto:
 
+
+ 1.  Clone e configure:
+
 ```
-
- # 1- Clone e configure:
-
 git clone <seu-repositorio>
 cd library_api
 cp .env.example .env
 # Edite o .env com suas configurações
 
-# 2. Instale as dependências:
+```
+2.  Instale as dependências:
 
+```
 bundle install
 yarn install
 
-# 3. Configure o banco de dados:
+```
+3. Configure o banco de dados:
 
+```
 rails db:create db:migrate db:seed
 
-# 4. Inicie os serviços:
+```
+4. Inicie os serviços:
 
+```
 # Em terminais separados:
 redis-server
 bundle exec sidekiq
 rails server
 
-# 5. Teste a API:
+```
+5. Teste a API:
 
+```
 # Registre um usuário
 curl -X POST http://localhost:3000/api/v1/auth/register \
   -H "Content-Type: application/json" \
   -d '{"user":{"email":"test@example.com","password":"password","first_name":"John","last_name":"Doe"}}'
 
-# Faça login
+```
+6. Faça login
+
+
+```
 curl -X POST http://localhost:3000/api/v1/auth/login \
   -H "Content-Type: application/json" \
   -d '{"email":"test@example.com","password":"password"}'
 
-# Liste livros (use o token retornado)
+```
+7. Liste livros (use o token retornado)
+
+```
 curl -X GET http://localhost:3000/api/v1/books \
   -H "Authorization: Bearer <seu_token>"
 
