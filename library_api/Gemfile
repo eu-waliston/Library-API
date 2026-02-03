@@ -1,0 +1,65 @@
+# Gemfile
+source 'https://rubygems.org'
+
+ruby '3.2.2'
+
+# API
+gem 'rails', '~> 7.0.4'
+gem 'puma', '~> 5.6'
+gem 'rack-cors'
+
+# Banco de Dados
+gem 'pg', '~> 1.4'
+gem 'redis', '~> 4.8'
+
+# Autenticação e Autorização
+gem 'devise', '~> 4.9'
+gem 'devise-jwt', '~> 0.10.0'
+gem 'pundit', '~> 2.3'
+
+# Serialização
+gem 'active_model_serializers', '~> 0.10.13'
+gem 'fast_jsonapi'
+
+# Background Jobs
+gem 'sidekiq', '~> 7.0'
+gem 'sidekiq-cron', '~> 1.10'
+
+# Cache
+gem 'redis-rails'
+
+# Validações e Utilitários
+gem 'bcrypt', '~> 3.1'
+gem 'faker', '~> 3.1'
+gem 'kaminari', '~> 1.2'
+
+# Testes
+gem 'rspec-rails', '~> 6.0'
+gem 'factory_bot_rails', '~> 6.2'
+gem 'shoulda-matchers', '~> 5.3'
+gem 'database_cleaner-active_record', '~> 2.0'
+gem 'simplecov', '~> 0.22'
+gem 'faker', '~> 3.1'
+
+# Documentação
+gem 'rswag', '~> 2.8'
+
+# Segurança
+gem 'brakeman', require: false
+gem 'bundler-audit', require: false
+
+# Monitoramento
+gem 'prometheus-client', '~> 4.0'
+
+group :development do
+  gem 'spring', '~> 4.1'
+  gem 'spring-watcher-listen', '~> 2.1'
+  gem 'rubocop', require: false
+  gem 'rubocop-rails', require: false
+  gem 'rubocop-rspec', require: false
+end
+
+group :test do
+  gem 'webmock', '~> 3.18'
+  gem 'vcr', '~> 6.1'
+end
