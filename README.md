@@ -146,12 +146,12 @@ git checkout -b feature/AmazingFeature
 
 ## 📜 Licença
 
-##### Distribuído sob a licença MIT.
-##### Use, modifique, evolua — conhecimento é pra circular 🌍✨
+### Distribuído sob a licença MIT.
+### Use, modifique, evolua — conhecimento é pra circular 🌍✨
 
 <div align="center">
 
 💡 Código é poesia quando é bem escrito.
 Feito com ☕, 🧠 e um pouco de ousadia.
 
-</div> ```
+</div>
