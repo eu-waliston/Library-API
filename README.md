@@ -1,288 +1,157 @@
-# Library API
+<div align="center">
 
-API RESTful completa para gestão de biblioteca digital com autenticação JWT, autorização, cache, background jobs e muito mais.
+# 📚 Library API  
+### Uma biblioteca digital inteligente, moderna e poderosa
 
-## Funcionalidades
+🚀 API RESTful completa para gestão de bibliotecas digitais  
+🔐 Segura • ⚡ Performática • 🧠 Escalável • 🐳 Dockerizada  
 
-- ✅ Autenticação JWT com roles (member, librarian, admin)
-- ✅ CRUD completo de livros, autores, categorias
-- ✅ Sistema de empréstimos com controle de datas
-- ✅ Sistema de reservas
-- ✅ Avaliações e reviews
-- ✅ Sistema de multas por atraso
-- ✅ Notificações por email
-- ✅ Background jobs para tarefas periódicas
-- ✅ Cache com Redis
-- ✅ Documentação Swagger/OpenAPI
-- ✅ Testes completos com RSpec
-- ✅ Docker e Docker Compose
+![Ruby](https://img.shields.io/badge/Ruby-3.1.2-red)
+![Rails](https://img.shields.io/badge/Rails-7.0-red)
+![Postgres](https://img.shields.io/badge/PostgreSQL-15-blue)
+![Redis](https://img.shields.io/badge/Redis-cache-critical)
+![Sidekiq](https://img.shields.io/badge/Sidekiq-jobs-orange)
+![JWT](https://img.shields.io/badge/Auth-JWT-success)
+![RSpec](https://img.shields.io/badge/Tests-RSpec-brightgreen)
+![Docker](https://img.shields.io/badge/Docker-ready-blue)
 
-## Tecnologias
+</div>
 
-- Ruby on Rails 7 (API mode)
-- PostgreSQL
-- Redis
-- Sidekiq
-- JWT
-- Pundit (autorização)
-- RSpec
-- Swagger
+---
 
-## Instalação
+## ✨ Visão Geral
 
-### Com Docker (recomendado)
+A **Library API** é uma API RESTful robusta criada para gerenciar uma biblioteca digital completa — desde autenticação de usuários até empréstimos, reservas, notificações e jobs em background.
+
+Tudo isso seguindo boas práticas, arquitetura limpa e foco em escalabilidade.  
+Código que respira organização. Sistema que flui como poesia 📖✨
+
+---
+
+## 🚀 Funcionalidades
+
+✔️ Autenticação JWT com roles (`member`, `librarian`, `admin`)  
+✔️ CRUD completo de livros, autores e categorias  
+✔️ Sistema de empréstimos com controle de datas  
+✔️ Reservas inteligentes  
+✔️ Avaliações e reviews  
+✔️ Multas automáticas por atraso  
+✔️ Notificações por e-mail  
+✔️ Background jobs com Sidekiq  
+✔️ Cache com Redis  
+✔️ Documentação Swagger/OpenAPI  
+✔️ Testes completos com RSpec  
+✔️ Docker & Docker Compose  
+
+---
+
+## 🧰 Tecnologias
+
+| Stack | Ferramenta |
+|-----|-----------|
+| 🧠 Backend | Ruby on Rails 7 (API Mode) |
+| 🗄 Banco de Dados | PostgreSQL |
+| ⚡ Cache | Redis |
+| 🔄 Jobs | Sidekiq |
+| 🔐 Auth | JWT |
+| 🛂 Autorização | Pundit |
+| 🧪 Testes | RSpec |
+| 📑 Docs | Swagger |
+| 🐳 Infra | Docker |
+
+---
+
+## 🐳 Instalação (Docker – Recomendado)
 
 ```bash
-# Clone o repositório
 git clone <repository-url>
 cd library_api
 
-# Inicie os containers
 docker-compose up -d
-
-# Execute as migrações
 docker-compose exec app rails db:create db:migrate db:seed
 ```
-### Sem Docker
+
+## 🛠️ Instalação (Sem Docker)
 
 ```
 
-# Instale as dependências
 bundle install
 yarn install
 
-# Configure o banco de dados
 rails db:create db:migrate db:seed
 
-# Inicie os serviços
 redis-server &
 bundle exec sidekiq &
 rails server
 
 ```
+## 🔐 Autenticação
+***Endpoints***
 
-### Endpoints Principais
+| Método | Endpoint              | Descrição         |
+| ------ | --------------------- | ----------------- |
+| POST   | /api/v1/auth/register | Registrar usuário |
+| POST   | /api/v1/auth/login    | Login             |
+| POST   | /api/v1/auth/logout   | Logout            |
+| GET    | /api/v1/auth/me       | Perfil do usuário |
 
-**Autenticação**
+### 📚 Livros
+| Método | Endpoint                      |
+| ------ | ----------------------------- |
+| GET    | /api/v1/books                 |
+| GET    | /api/v1/books/:id             |
+| POST   | /api/v1/books                 |
+| POST   | /api/v1/books/:id/borrow      |
+| GET    | /api/v1/books/recommendations |
 
-  - POST /api/v1/auth/register - Registrar usuário
+### 🔄 Empréstimos
+| Método | Endpoint                 |
+| ------ | ------------------------ |
+| GET    | /api/v1/loans            |
+| POST   | /api/v1/loans/:id/return |
 
-  - POST /api/v1/auth/login - Login
-
-  - POST /api/v1/auth/logout - Logout
-
-  - GET /api/v1/auth/me - Perfil do usuário
-
-**Livros**
-
-  - GET /api/v1/books - Listar livros (com filtros)
-
-  - GET /api/v1/books/:id - Detalhes do livro
-
-  - POST /api/v1/books - Criar livro (apenas admin/librarian)
-
-  - POST /api/v1/books/:id/borrow - Emprestar livro
-
-  - GET /api/v1/books/recommendations - Recomendações personalizadas
-
-**Empréstimos**
-
-  - GET /api/v1/loans - Meus empréstimos
-
-  - POST /api/v1/loans/:id/return - Devolver livro
-
-## Variáveis de Ambiente
-
+### 🌱 Variáveis de Ambiente
 ```
-
 DATABASE_URL=postgresql://user:password@localhost:5432/library_api
 REDIS_URL=redis://localhost:6379/1
 SECRET_KEY_BASE=your_secret_key_base
 RAILS_ENV=development
-
 ```
 
-## Testes
-
+### 🧪 Testes
 ```
-
-# Rodar todos os testes
 bundle exec rspec
-
-# Rodar testes específicos
 bundle exec rspec spec/models/book_spec.rb
-
-# Com cobertura de código
 COVERAGE=true bundle exec rspec
-
 ```
+****Porque código bonito também precisa ser confiável 💚***
 
-## Documentação da API
+## 📑 Documentação da API
+#### 👉 Acesse: ```http://localhost:3000/api-docs```
+****Swagger interativo, claro e direto ao ponto.****
 
-**Acesse ```http://localhost:3000/api-docs``` para a documentação Swagger interativa.**
+## 🤝 Contribuindo
 
-## Background Jobs
+1. Fork o projeto 🍴
 
-Os jobs são gerenciados pelo Sidekiq. Acesse http://localhost:3000/sidekiq (apenas admin) para monitorar.
-
-### Contribuição
-
-1. Fork o projeto
-
-2. Crie uma branch (git checkout -b feature/AmazingFeature)
-
-3. Commit suas mudanças (git commit -m 'Add some AmazingFeature')
-
-4. Push para a branch (git push origin feature/AmazingFeature)
-
-5. Abra um Pull Request
-
-## Licença
-Distribuído sob a licença MIT. Veja LICENSE para mais informações.
-
-
-
-## Arquivos de Configuração Adicionais
-
-### .env.example
-```env
-DATABASE_HOST=localhost
-DATABASE_PORT=5432
-DATABASE_USERNAME=library_user
-DATABASE_PASSWORD=password
-REDIS_URL=redis://localhost:6379/1
-SECRET_KEY_BASE=your_secret_key_base_here
-RAILS_ENV=development****
+2. Crie sua branch:
 ```
-## .rubocop.yml
-
+git checkout -b feature/AmazingFeature
 ```
+3. Commit suas mudanças
 
-require:
-  - rubocop-rails
-  - rubocop-rspec
+4. Push para a branch
 
-AllCops:
-  NewCops: enable
-  TargetRubyVersion: 3.1.2
-  Exclude:
-    - 'db/**/*'
-    - 'bin/*'
-    - 'vendor/**/*'
-    - 'node_modules/**/*'
-    - 'tmp/**/*'
+5. Abra um Pull Request 💜
 
-Metrics/BlockLength:
-  Exclude:
-    - 'spec/**/*'
-    - 'config/routes.rb'
+## 📜 Licença
 
-Style/Documentation:
-  Enabled: false
+##### Distribuído sob a licença MIT.
+##### Use, modifique, evolua — conhecimento é pra circular 🌍✨
 
-Layout/LineLength:
-  Max: 100
+<div align="center">
 
-Rails:
-  Enabled: true
+💡 Código é poesia quando é bem escrito.
+Feito com ☕, 🧠 e um pouco de ousadia.
 
-```
-
-33 Como Executar o Projeto:
-
-
- 1.  Clone e configure:
-
-```
-git clone <seu-repositorio>
-cd library_api
-cp .env.example .env
-# Edite o .env com suas configurações
-
-```
-2.  Instale as dependências:
-
-```
-bundle install
-yarn install
-
-```
-3. Configure o banco de dados:
-
-```
-rails db:create db:migrate db:seed
-
-```
-4. Inicie os serviços:
-
-```
-# Em terminais separados:
-redis-server
-bundle exec sidekiq
-rails server
-
-```
-5. Teste a API:
-
-```
-# Registre um usuário
-curl -X POST http://localhost:3000/api/v1/auth/register \
-  -H "Content-Type: application/json" \
-  -d '{"user":{"email":"test@example.com","password":"password","first_name":"John","last_name":"Doe"}}'
-
-```
-6. Faça login
-
-
-```
-curl -X POST http://localhost:3000/api/v1/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{"email":"test@example.com","password":"password"}'
-
-```
-7. Liste livros (use o token retornado)
-
-```
-curl -X GET http://localhost:3000/api/v1/books \
-  -H "Authorization: Bearer <seu_token>"
-
-```
-## Este projeto cobre:
-
-  - ✅ Arquitetura RESTful completa
-
-  - ✅ Autenticação JWT com diferentes roles
-
-  - ✅ Autorização granular com Pundit
-
-  - ✅ Cache com Redis
-
-  - ✅ Background jobs com Sidekiq
-
-  - ✅ Testes com RSpec
-
-  - ✅ Documentação com Swagger
-
-  - ✅ Dockerização completa
-
-  - ✅ Monitoramento
-
-  - ✅ Validações robustas
-
-  - ✅ Serialização de dados
-
-  - ✅ Paginação
-
-  - ✅ Filtros e busca
-
-  - ✅ Serviços especializados
-
-  - ✅ Jobs periódicos
-
-  - ✅ Sistema de notificações
-
-  - ✅ Relatórios
-
-  - ✅ Configuração de ambiente
-   
-  - ✅ Linting com Rubocop
+</div> ```
